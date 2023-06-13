@@ -1,6 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import './App.css';
 import { useGetShowsQuery } from './services/shows';
+import ShowList from './components/ShowList';
+import { Show } from './types/show';
 
 function App() {
   const [currentPage, setCurrentPage] = useState(0)
@@ -10,33 +12,25 @@ function App() {
     setCurrentPage(currentPage+1)
   }, [currentPage])
 
+  const onItemClicked = useCallback((show: Show) => {
+    console.log(show)
+  }, [])
+
   return (
     <div>
-      <ul>
-        {
-          data?.map(item => (
-            <li key={item?.id}>{item?.name}</li>
-          ))
-        }
-      </ul>
-      <button onClick={loadMore}>Load More data</button>
+      {
+        (error) ? (
+          <div className="error">Error fetching shows data</div>
+        ): (
+          <>
+            <ShowList items={data} onItemClicked={onItemClicked} isLoading={isLoading}/>
+            {
+              !isLoading &&
+              <button onClick={loadMore}>Load More data</button> 
+            }
+          </>
+      )}
     </div>
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.tsx</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-    //   </header>
-    // </div>
   );
 }
 
