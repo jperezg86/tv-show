@@ -6,7 +6,16 @@ export const showsApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: 'https://api.tvmaze.com/' }),
     endpoints: (builder) => ({
         getShows: builder.query<Show[],number>({
-            query: (page = 0) => `shows?page=${page}`
+            query: (page = 0) => `shows?page=${page}`,
+            serializeQueryArgs: ({ endpointName }) => {
+                return endpointName
+              },
+            merge: (cachedData, currentData) => {
+                cachedData.push(...currentData)
+            },
+            forceRefetch({ currentArg, previousArg }) {
+                return currentArg !== previousArg
+            },
         })
     }),
 })
