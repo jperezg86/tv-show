@@ -22,13 +22,16 @@ function App() {
         (error) ? (
           <div className="error">Error fetching shows data</div>
         ): (
-          <>
-            <ShowList items={data} onItemClicked={onItemClicked} isLoading={isLoading}/>
-            {
-              !isLoading &&
-              <button onClick={loadMore}>Load More data</button> 
-            }
-          </>
+          <div className="flex flex-col p-12 overflow-hidden">
+            <h1 className='font-extrabold text-center text-4xl'>My TV Shows</h1>
+            <div className="flex h-100 overflow-scroll">
+                <ShowList items={data} onItemClicked={onItemClicked} isLoading={isLoading}/>
+                {
+                  !isLoading &&
+                  <button onClick={loadMore}>Load More data</button> 
+                }
+            </div>
+          </div>
       )}
     </div>
   );

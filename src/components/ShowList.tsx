@@ -12,7 +12,7 @@ const ShowListItem = ({
     onClick(show);
   }, [onClick, show]);
 
-  return <li onClick={listItemClick} className="">{show?.name}</li>;
+  return <li onClick={listItemClick} className="cursor-pointer border">{show?.name}</li>;
 };
 
 type ListProps = {
