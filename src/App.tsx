@@ -1,8 +1,12 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { useGetShowsQuery } from './services/shows';
 
 function App() {
+  const {data, error, isLoading} = useGetShowsQuery(0)
+  console.log(data)
+
   return (
     <div className="App">
       <header className="App-header">
