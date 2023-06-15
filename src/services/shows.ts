@@ -16,8 +16,15 @@ export const showsApi = createApi({
             forceRefetch({ currentArg, previousArg }) {
                 return currentArg !== previousArg
             },
+        }),
+        filterShows: builder.query<Show[], string>({
+           query: (q: string) => `/search/shows?q=${q}`,
+           transformResponse: (response: {score: number, show: Show}[]) : any => {
+                return response?.map(item => item.show)
+           } 
         })
+
     }),
 })
 
-export const { useGetShowsQuery } = showsApi
+export const { useGetShowsQuery, useFilterShowsQuery } = showsApi

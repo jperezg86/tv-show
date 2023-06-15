@@ -1,14 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { showsApi } from "./services/shows";
-// import { setupListeners } from "@reduxjs/toolkit/dist/query";
+import FavoritesReducer from "./features/favorites/slice";
 
-export default configureStore({
-    reducer: {
-        [showsApi.reducerPath]: showsApi.reducer
-    },
+const store = configureStore({
+  reducer: {
+    favorites: FavoritesReducer,
+    [showsApi.reducerPath]: showsApi.reducer,
+  },
 
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(showsApi.middleware)
-})
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(showsApi.middleware),
+});
 
-// setupListeners(store.dispatch)
+export type RootState = ReturnType<typeof store.getState>;
 
+export default store;
